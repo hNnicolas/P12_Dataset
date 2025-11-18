@@ -65,7 +65,22 @@ data = {
 
 df = pd.DataFrame(data)
 
-# Split train/test
+# ----------------------------------------------------------
+# 3a. Suppression des données invalides
+# ----------------------------------------------------------
+df = df.dropna(subset=['reclamation', 'etiquette'])
+
+# ----------------------------------------------------------
+# 3b. Graphe de répartition des étiquettes
+# ----------------------------------------------------------
+df['etiquette'].value_counts().plot(kind='bar', figsize=(8,5), color='skyblue')
+plt.title("Répartition des étiquettes dans le dataset")
+plt.ylabel("Nombre de réclamations")
+plt.show()
+
+# ----------------------------------------------------------
+# 3c. Split train/test
+# ----------------------------------------------------------
 train_df, test_df = train_test_split(df, test_size=0.2, random_state=42, stratify=df['etiquette'])
 print(f"Taille dataset : {len(df)}, Train : {len(train_df)}, Test : {len(test_df)}")
 
